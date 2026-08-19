@@ -90,7 +90,7 @@
 
                 <a href="{{ route('tasks.edit', $task->id) }}"
                    class="btn btn-sm btn-outline-secondary me-1">
-                    <i class="fas fa-edit"></i>
+                    Edit
                 </a>
 
                 <form class="d-inline"
@@ -103,7 +103,7 @@
                     <button type="submit"
                             onclick="return confirm('Are you sure you want to delete this task?')"
                             class="btn btn-sm btn-outline-danger">
-                        <i class="fas fa-trash"></i>
+                             Delete
                     </button>
 
                 </form>

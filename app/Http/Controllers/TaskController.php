@@ -5,15 +5,24 @@ namespace App\Http\Controllers;
 use App\Models\Task;
 use Illuminate\Auth\Middleware\Authorize;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class TaskController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $tasks = auth()->user()->tasks;
+        $tasks = Task::all();
         return response()->json($tasks);
+    }
 
+    public function webIndex()
+    {
+
+        $tasks = auth()->user()->tasks()->get();
+
+        return view('tasks.index', compact('tasks'));
     }
     public function create()
     {
@@ -22,15 +31,17 @@ class TaskController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'status' => 'nullable|in:pending,in_progress,completed',
             'due_date' => 'nullable|date',
         ]);
-
         $task = auth()->user()->tasks()->create($validated);
-        return response()->json($task, 201);
+        if ($request->is('api/*')) {
+            return response()->json($task, 201);
+        }
+        return redirect()->route('tasks.index')
+            ->with('success', 'Task added successfully.');
     }
 
     public function show(Task $task)
@@ -46,6 +57,9 @@ class TaskController extends Controller
 
     public function edit(Task $task)
     {
+        if ($task->user_id !== auth()->id()) {
+            abort(403);
+        }
         return view('tasks.edit', compact('task'));
     }
     public function update(Request $request, Task $task)
