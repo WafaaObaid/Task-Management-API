@@ -41,4 +41,4 @@ RUN a2enconf laravel
 
 EXPOSE 80
 
-CMD php artisan migrate --force && apache2-foreground
+CMD php artisan migrate:fresh --force && apache2-foreground
