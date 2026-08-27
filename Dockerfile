@@ -8,8 +8,11 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     libpng-dev \
     libonig-dev \
+    libpq-dev \
     && docker-php-ext-install \
     pdo_mysql \
+    pdo_pgsql \
+    pgsql \
     mbstring \
     zip \
     bcmath \
@@ -38,4 +41,4 @@ RUN a2enconf laravel
 
 EXPOSE 80
 
-CMD ["apache2-foreground"]
+CMD php artisan migrate --force && apache2-foreground
