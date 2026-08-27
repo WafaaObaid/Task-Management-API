@@ -4,6 +4,7 @@ A Laravel-based Task Management application that provides a REST API and a web i
 
 ## Features
 
+- Landing page
 - User Registration
 - User Login
 - User Logout
@@ -101,13 +102,16 @@ Unauthorized access to another user's task returns:
 ## Web Interface
 
 The project also includes a web interface built with Laravel Blade and Bootstrap.
+
 Users can:
 
+- Access the landing page.
+- Register and login.
 - View their tasks in a table.
 - Add new tasks.
 - Edit existing tasks.
 - Delete tasks using a confirmation modal.
-- View deleted tasks separately.
+- View deleted tasks on a separate page.
 - Restore soft-deleted tasks.
 
 The web interface provides a simple and responsive design for managing tasks.
@@ -136,6 +140,8 @@ The API was tested using Postman, including:
 
 The web interface was also tested for:
 
+- User registration
+- User login
 - Creating tasks
 - Viewing tasks
 - Editing tasks
@@ -217,6 +223,7 @@ Task_Management/
 │       │   └── register.blade.php
 │       │
 │       └── tasks/
+│           |── landing.blade.php
 │           ├── index.blade.php
 │           ├── create.blade.php
 │           ├── edit.blade.php
