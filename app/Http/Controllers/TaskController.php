@@ -14,13 +14,14 @@ class TaskController extends Controller
     public function index(Request $request)
     {
         $tasks = Task::all();
+
         return response()->json($tasks);
     }
 
     public function webIndex()
     {
 
-        $tasks = auth()->user()->tasks()->get();
+        $tasks = auth()->user()->tasks;
 
         return view('tasks.index', compact('tasks'));
     }
@@ -79,7 +80,8 @@ class TaskController extends Controller
 
         $task->update($validated);
 
-        return response()->json($task);
+        return redirect()->route('tasks.index')
+            ->with('success', 'Task updated successfully!');
     }
 
     public function destroy(Task $task)
@@ -92,8 +94,27 @@ class TaskController extends Controller
 
         $task->delete();
 
-        return response()->json([
-            'message' => 'Task deleted successfully'
-        ]);
+        return redirect()->route('tasks.index')
+            ->with('success', 'Task deleted successfully!');
+
+    }
+    public function deleted()
+    {
+        $deletedTasks = auth()->user()->tasks()
+            ->onlyTrashed()
+            ->get();
+
+        return view('tasks.deleted', compact('deletedTasks'));
+    }
+    public function restore($id)
+    {
+        $task = auth()->user()->tasks()
+            ->onlyTrashed()
+            ->findOrFail($id);
+
+        $task->restore();
+
+        return redirect()->route('tasks.deleted')
+            ->with('success', 'Task restored successfully!');
     }
 }

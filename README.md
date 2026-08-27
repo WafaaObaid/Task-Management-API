@@ -1,6 +1,6 @@
 # Task Management API
 
-A Laravel-based Task Management API that allows users to create, view, update, and delete their own tasks.
+A Laravel-based Task Management application that provides a REST API and a web interface for users to create, view, update, and manage their own tasks.
 
 ## Features
 
@@ -17,6 +17,12 @@ A Laravel-based Task Management API that allows users to create, view, update, a
 - Input validation
 - MySQL database
 - Soft Delete support for tasks
+- Restore deleted tasks
+- Web interface for task management
+- Bootstrap-based responsive UI
+- Delete confirmation modal
+- Separate page for deleted tasks
+- Restore deleted tasks from the web interface
 
 ## Technologies Used
 
@@ -27,6 +33,7 @@ A Laravel-based Task Management API that allows users to create, view, update, a
 - REST API
 - Postman
 - Bootstrap
+- Blade
 
 ## Task Fields
 
@@ -91,6 +98,31 @@ Unauthorized access to another user's task returns:
 403 Forbidden
 ```
 
+## Web Interface
+
+The project also includes a web interface built with Laravel Blade and Bootstrap.
+Users can:
+
+- View their tasks in a table.
+- Add new tasks.
+- Edit existing tasks.
+- Delete tasks using a confirmation modal.
+- View deleted tasks separately.
+- Restore soft-deleted tasks.
+
+The web interface provides a simple and responsive design for managing tasks.
+
+## Demo Account
+If you want to try the web interface, you can log in using the following demo account:
+
+# Email
+ali@example.com
+
+# Password
+ali123456
+
+This account is intended for demonstration and testing purposes only.
+
 ## Testing
 
 The API was tested using Postman, including:
@@ -101,6 +133,15 @@ The API was tested using Postman, including:
 - Task CRUD operations
 - Authentication using Bearer Tokens
 - Authorization between different users
+
+The web interface was also tested for:
+
+- Creating tasks
+- Viewing tasks
+- Editing tasks
+- Deleting tasks
+- Viewing deleted tasks
+- Restoring deleted tasks
 
 ## Installation
 
@@ -146,11 +187,46 @@ php artisan migrate
 php artisan serve
 ```
 
-## Future Improvements
-- Complete the web interface for task management
-- Add task restoration for soft-deleted tasks
-- Add search and filtering
-- Add pagination
-- Improve API response structure using API Resources
-- Add automated tests
-- Add task restoration for soft-deleted tasks
+
+## Project Structure
+
+```text
+Task_Management/
+├── app/
+│   ├── Http/
+│   │   └── Controllers/
+│   │       ├── TaskController.php
+│   │       └── AuthController.php
+│   │
+│   └── Models/
+│       ├── Task.php
+│       └── User.php
+│
+├── database/
+│   ├── migrations/
+│   │   ├── create_users_table.php
+│   │   ├── create_tasks_table.php
+│   │   └── add_deleted_at_to_tasks_table.php
+│   │
+│   └── seeders/
+│
+├── resources/
+│   └── views/
+│       ├── auth/
+│       │   ├── login.blade.php
+│       │   └── register.blade.php
+│       │
+│       └── tasks/
+│           ├── index.blade.php
+│           ├── create.blade.php
+│           ├── edit.blade.php
+│           └── deleted.blade.php
+│
+├── routes/
+│   ├── api.php
+│   └── web.php
+│
+├── .env.example
+├── composer.json
+└── README.md
+```
